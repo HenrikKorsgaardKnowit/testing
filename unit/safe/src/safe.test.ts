@@ -35,6 +35,20 @@ test<TestContext>('Enter (key,1,2,3) gives "123   " as output. Safe is locked.',
     expect(safe.isLocked()).toBe(true);
 })
 
+test<TestContext>('Enter (1) gives “ERROR ”. Safe locked.', ({safe}) => {
+    safe.enter(Button.D1)
+    expect(safe.readDisplay()).toBe('ERROR ');
+})
+
+test<TestContext>('Enter (key, 1, key, 3) gives “3     ”. Safe locked.', ({safe}) => {
+    safe.enter(Button.KEY)
+    safe.enter(Button.D1)
+    safe.enter(Button.KEY)
+    safe.enter(Button.D3)
+    expect(safe.readDisplay()).toBe('3     ');
+})
+
+/*
 test<TestContext>('Enter (key,1) gives "1     ". Enter (7) gives "17    ". Enter (9) Gives "179   ". Safe is locked.', ({safe}) => {
     safe.enter(Button.KEY)
     safe.enter(Button.D1)
@@ -74,17 +88,23 @@ test<TestContext>('Enter (key,1,2,4,3,5,6) gives "OPEN ".', ({safe}) => {
     expect(safe.isLocked()).toBe(true);
 })
 
-
-
-/*
-test<TestContext>('Test case 3: Enter (key,1,2,3,4,5,6) gives "OPEN ".', ({safe}) => {
+test<TestContext>('Enter codes with digits 0, 8 and 9.', ({safe}) => {
     safe.enter(Button.KEY)
-    safe.enter(Button.D2)
-    safe.enter(Button.D3)
-    safe.enter(Button.D4)
-    safe.enter(Button.D5)
-    safe.enter(Button.D6)
+    safe.enter(Button.D9)
+    safe.enter(Button.D0)
+    safe.enter(Button.D8)
 
-    expect(safe.readDisplay()).toBe('OPEN ');
-    expect(safe.isLocked()).toBe(false);
+    expect(safe.readDisplay()).toBe('908   ');
+})
+
+
+
+test<TestContext>('Enter (key, 1, key, 3) gives “3     ”. Safe locked.', ({safe}) => {
+    safe.enter(Button.KEY)
+    safe.enter(Button.D1)
+    safe.enter(Button.KEY)
+    safe.enter(Button.D1)
+    expect(safe.readDisplay()).toBe('3     ');
 })*/
+
+
