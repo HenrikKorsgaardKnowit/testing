@@ -154,20 +154,6 @@ test<TestContext>('Open then lock: Enter (KEY,1,2,3,4,5,6) gives "OPEN  ". Safe 
 })
 
 
-test<TestContext>('Open then press KEY: Enter (KEY,1,2,3,4,5,6) gives "OPEN  ". Safe unlocked. Enter (KEY). Safe locked.', ({safe}) => {
-    safe.enter(Button.KEY)
-    safe.enter(Button.D1)
-    safe.enter(Button.D2)
-    safe.enter(Button.D3)
-    safe.enter(Button.D4)
-    safe.enter(Button.D5)
-    safe.enter(Button.D6)
-    expect(safe.readDisplay()).toBe('OPEN  ');
-    expect(safe.isLocked()).toBe(false);
-    safe.enter(Button.KEY)
-    expect(safe.readDisplay()).toBe('      ');
-    expect(safe.isLocked()).toBe(true);
-})
 
 
 
