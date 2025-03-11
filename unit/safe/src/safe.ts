@@ -289,7 +289,7 @@ export class SafeImpl7 implements Safe{
     }
 }
 
-export class SafeImpl implements Safe{
+export class SafeImpl8 implements Safe{
 
     private displayContents:string;
     private locked: boolean;
@@ -330,5 +330,114 @@ export class SafeImpl implements Safe{
     }
 }
 
+
+export class SafeImpl9 implements Safe{
+
+    private displayContents:string;
+    private locked: boolean;
+    private keyInput: Button[];
+    private readonly BLANK:string = "      ";
+    private code:string = "123456";
+
+    constructor(){
+        this.displayContents = this.BLANK;
+        this.locked = true;
+        this.keyInput = []
+    }
+
+    enter(button: Button): void {
+        if(button == Button.LOCK){
+            this.displayContents = "      ";
+            this.locked = true;
+            this.keyInput = [];
+        } else if(button == Button.KEY) {
+            this.keyInput = [Button.KEY];
+        } else {
+            this.keyInput.push(button)
+            if(this.keyInput[0] != Button.KEY){
+                this.displayContents = "ERROR ";
+                this.locked = true;
+                this.keyInput = [];
+            } else {
+                var inputResult = this.keyInput.slice(1).join("");
+                inputResult += this.BLANK.slice(inputResult.length);
+                if(inputResult == this.code){
+                    this.displayContents = "OPEN  ";
+                    this.locked = false;
+                    this.keyInput = [];
+                } else if(inputResult.indexOf(" ") == -1) {
+                    this.displayContents = "CLOSED";
+                    this.keyInput = [];
+                } else {
+                    this.displayContents = inputResult;
+                }   
+            }
+        }
+    }
+
+    readDisplay(): string {
+        return this.displayContents
+    }
+
+    isLocked(): boolean {
+        return this.locked;
+    }
+}
+
+
+export class SafeImpl implements Safe{
+
+    private displayContents:string;
+    private locked: boolean;
+    private keyInput: Button[];
+    private readonly BLANK:string = "      ";
+    private code:string = "123456";
+
+    constructor(){
+        this.displayContents = this.BLANK;
+        this.locked = true;
+        this.keyInput = []
+    }
+
+    enter(button: Button): void {
+
+        if(button == Button.LOCK){
+            this.displayContents = this.BLANK;
+            this.locked = true;
+            this.keyInput = [];
+        } else if(button == Button.KEY) {
+            this.keyInput = [Button.KEY];
+            
+        } else {
+            this.keyInput.push(button)
+            if(this.keyInput[0] != Button.KEY){
+                this.displayContents = "ERROR ";
+                this.locked = true;
+                this.keyInput = [];
+            } else {
+                var inputResult = this.keyInput.slice(1).join("");
+                inputResult += this.BLANK.slice(inputResult.length);
+                if(inputResult == this.code){
+                    this.displayContents = "OPEN  ";
+                    this.locked = false;
+                    this.keyInput = [];
+                } else if(inputResult.indexOf(" ") == -1) {
+                    this.displayContents = "CLOSED";
+                    this.keyInput = [];
+                } else {
+                    this.displayContents = inputResult;
+                }   
+            }
+        }
+    }
+
+    readDisplay(): string {
+        return this.displayContents
+    }
+
+    isLocked(): boolean {
+        return this.locked;
+    }
+}
 
 
