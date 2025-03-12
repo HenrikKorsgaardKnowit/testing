@@ -400,6 +400,8 @@ export class SafeImpl implements Safe{
     }
 
     enter(button: Button): void {
+        // what about a solution with input states
+        
 
         if(button == Button.LOCK){
             this.displayContents = this.BLANK;
