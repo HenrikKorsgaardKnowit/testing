@@ -415,7 +415,6 @@ The last one is a bit unclear from the requirements. Should the "ERROR " state l
 ## Summary: what testing gives us
 Now we have an adequate set of unit tests for our Hotel Safe. The full lists of tests and the reference implementation is in the `solutions` branch. With out tests we get the following benefits.
 
-### Tests to guide future implementations
 We did not implement test or code for user story 5 on setting a new code for the safe. Now we have a good foundation for continuing the implementation and making sure that the extension do not break the existing code. That is an important feature of TDD and unit tests.
 
 Depending on the current implementation, we may also want to refactor our code. Perhaps our solution is spaghetti code that defies all best-practices and style guides. This is something we can fix and use the tests to guide us. The current implementation also suggest a state-based implementation (KEY, LOCK, PIN), so if there is a more elegant and readable implementation, we can try that out with the tests as a safety blanket. The same goes for optimization ideas etc.
