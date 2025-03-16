@@ -1,6 +1,6 @@
 // Imagine a physical Hotel Safe interface with physical buttons. 
 export enum Button {
-    D0,D1,D2,D3,D4,D5,D6,D7,D8,D9,LOCK,KEY,PIN
+    D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, LOCK, KEY, PIN
 }
 
 interface Safe {
@@ -12,15 +12,15 @@ interface Safe {
     ∗ a 7−segment display.
     ∗ @return: the output on the display 
     */
-    readDisplay():string;
+    readDisplay(): string;
     /** Get the state of the safe: is it locked or not.
     * @return true if the safe is locked    
     */
-    isLocked():boolean;
+    isLocked(): boolean;
 }
 
 //Iteration 0 - fix module issues
-export class SafeImpl1 implements Safe{
+export class SafeImpl0 implements Safe {
     enter(button: Button): void {
     }
 
@@ -32,8 +32,8 @@ export class SafeImpl1 implements Safe{
     }
 }
 
-//Iteration 1 - make the test pass by Faking it!
-export class SafeImpl2 implements Safe{
+//Iteration 0 - make the test pass by Faking it!
+export class SafeImpl1 implements Safe {
     enter(button: Button): void {
     }
 
@@ -45,17 +45,17 @@ export class SafeImpl2 implements Safe{
     }
 }
 
-//Iteration 3 - make the test pass by Faking it!
-export class SafeImpl3 implements Safe{
+//Iteration 1 - pass by faking "123   " return
+export class SafeImpl2 implements Safe {
 
-    private displayContents:string;
+    private displayContents: string;
 
-    constructor(){
-        this.displayContents = '      '
+    constructor() {
+        this.displayContents = "      "      
     }
 
     enter(button: Button): void {
-        this.displayContents = '123   '
+        this.displayContents = "123   "
     }
 
     readDisplay(): string {
@@ -66,263 +66,140 @@ export class SafeImpl3 implements Safe{
     }
 }
 
-//Iteration 4 - make the test pass by Faking it!
-export class SafeImpl4 implements Safe{
+//Iteration 2 - handle consequtive digit input and padding
+export class SafeImpl3 implements Safe {
 
-    private displayContents:string[];
-    private index: number;
-    private locked: boolean;
-    private map:Map<Button, string>;
+    private displayContents: string;
+    private keyInput: Button[];
+    private readonly BLANK: string = "      ";
 
-    constructor(){
-        this.displayContents = [" ", " ", " ", " ", " ", " "];
-        this.index = 0;
-        this.locked = true;
-        this.map = new Map<Button, string>();
-        this.map.set(Button.D1, "1")
-        this.map.set(Button.D2, "2")
-        this.map.set(Button.D3, "3")
-        this.map.set(Button.D4, "4")
-        this.map.set(Button.D5, "5")
-        this.map.set(Button.D6, "6")
-        this.map.set(Button.D7, "7")
-        this.map.set(Button.D9, "9")
-    }
-
-    enter(button: Button): void {
-        var c = this.map.get(button)
-        if ( c != null ) {
-            this.displayContents[this.index] = c
-            this.index = this.index+1
-        }
-        
-        if (this.readDisplay() == "123456") {
-            this.locked = false;
-            this.displayContents[0] = "O";
-            this.displayContents[1] = "P";
-            this.displayContents[2] = "E";
-            this.displayContents[3] = "N";
-            this.displayContents[4] = " ";
-            this.displayContents[5] = " ";
-        }
-    }
-
-    readDisplay(): string {
-        return this.displayContents.join("");
-    }
-
-    isLocked(): boolean {
-        return this.locked;
-    }
-}
-
-export class SafeImpl5 implements Safe{
-
-    private displayContents:string[];
-    private index: number;
-    private locked: boolean;
-    private map:Map<Button, string>;
-
-    constructor(){
-        this.displayContents = [" ", " ", " ", " ", " ", " "];
-        this.index = 0;
-        this.locked = true;
-        this.map = new Map<Button, string>();
-        this.map.set(Button.D1, "1")
-        this.map.set(Button.D2, "2")
-        this.map.set(Button.D3, "3")
-        this.map.set(Button.D4, "4")
-        this.map.set(Button.D5, "5")
-        this.map.set(Button.D6, "6")
-        this.map.set(Button.D7, "7")
-        this.map.set(Button.D9, "9")
-    }
-
-    enter(button: Button): void {
-        var c = this.map.get(button)
-        if ( c != null ) {
-            this.displayContents[this.index] = c
-            this.index = this.index+1
-        }
-        
-        if (this.readDisplay() == "123456") {
-            this.locked = false;
-            this.displayContents[0] = "O";
-            this.displayContents[1] = "P";
-            this.displayContents[2] = "E";
-            this.displayContents[3] = "N";
-            this.displayContents[4] = " ";
-            this.displayContents[5] = " ";
-        } else if(this.index == 6){
-            this.displayContents[0] = "C";
-            this.displayContents[1] = "L";
-            this.displayContents[2] = "O";
-            this.displayContents[3] = "S";
-            this.displayContents[4] = "E";
-            this.displayContents[5] = "D";
-        }
-    }
-
-    readDisplay(): string {
-        return this.displayContents.join("");
-    }
-
-    isLocked(): boolean {
-        return this.locked;
-    }
-}
-
-export class SafeImpl6 implements Safe{
-
-    private displayContents:string[];
-    private index: number;
-    private locked: boolean;
-    private map:Map<Button, string>;
-
-    constructor(){
-        this.displayContents = [" ", " ", " ", " ", " ", " "];
-        this.index = 0;
-        this.locked = true;
-        this.map = new Map<Button, string>();
-        this.map.set(Button.D0, "0")
-        this.map.set(Button.D1, "1")
-        this.map.set(Button.D2, "2")
-        this.map.set(Button.D3, "3")
-        this.map.set(Button.D4, "4")
-        this.map.set(Button.D5, "5")
-        this.map.set(Button.D6, "6")
-        this.map.set(Button.D7, "7")
-        this.map.set(Button.D8, "8")
-        this.map.set(Button.D9, "9")
-    }
-
-    enter(button: Button): void {
-        var c = this.map.get(button)
-        if ( c != null ) {
-            this.displayContents[this.index] = c
-            this.index = this.index+1
-        }
-        
-        if (this.readDisplay() == "123456") {
-            this.locked = false;
-            this.displayContents[0] = "O";
-            this.displayContents[1] = "P";
-            this.displayContents[2] = "E";
-            this.displayContents[3] = "N";
-            this.displayContents[4] = " ";
-            this.displayContents[5] = " ";
-        } else if(this.index == 6){
-            this.displayContents[0] = "C";
-            this.displayContents[1] = "L";
-            this.displayContents[2] = "O";
-            this.displayContents[3] = "S";
-            this.displayContents[4] = "E";
-            this.displayContents[5] = "D";
-        }
-    }
-
-    readDisplay(): string {
-        return this.displayContents.join("");
-    }
-
-    isLocked(): boolean {
-        return this.locked;
-    }
-}
-
-
-export class SafeImpl7 implements Safe{
-
-    private displayContents:string[];
-    private index: number;
-    private locked: boolean;
-    private map:Map<Button, string>;
-
-    constructor(){
-        this.displayContents = [" ", " ", " ", " ", " ", " "];
-        this.index = 0;
-        this.locked = true;
-        this.map = new Map<Button, string>();
-        this.map.set(Button.D0, "0")
-        this.map.set(Button.D1, "1")
-        this.map.set(Button.D2, "2")
-        this.map.set(Button.D3, "3")
-        this.map.set(Button.D4, "4")
-        this.map.set(Button.D5, "5")
-        this.map.set(Button.D6, "6")
-        this.map.set(Button.D7, "7")
-        this.map.set(Button.D8, "8")
-        this.map.set(Button.D9, "9")
-    }
-
-    enter(button: Button): void {
-        var c = this.map.get(button)
-        if ( c != null ) {
-            this.displayContents[this.index] = c
-            this.index = this.index+1
-        }
-        
-        if (this.readDisplay() == "123456") {
-            this.locked = false;
-            this.displayContents[0] = "O";
-            this.displayContents[1] = "P";
-            this.displayContents[2] = "E";
-            this.displayContents[3] = "N";
-            this.displayContents[4] = " ";
-            this.displayContents[5] = " ";
-        } else if(this.index == 6){
-            this.displayContents[0] = "C";
-            this.displayContents[1] = "L";
-            this.displayContents[2] = "O";
-            this.displayContents[3] = "S";
-            this.displayContents[4] = "E";
-            this.displayContents[5] = "D";
-        }
-    }
-
-    readDisplay(): string {
-        return this.displayContents.join("");
-    }
-
-    isLocked(): boolean {
-        return this.locked;
-    }
-}
-
-export class SafeImpl8 implements Safe{
-
-    private displayContents:string;
-    private locked: boolean;
-    private input: Button[];
-    private readonly BLANK:string = "      ";
-    private code:string = "123456";
-
-    constructor(){
+    constructor() {
         this.displayContents = this.BLANK;
-        this.locked = true;
-        this.input = []
+        this.keyInput = [];
     }
 
     enter(button: Button): void {
-        if(button == Button.KEY){
-            this.input = [Button.KEY]
+        if(button != Button.KEY && button != Button.LOCK){
+            this.keyInput.push(button)
+        }
+        
+        var output = this.keyInput.join("")
+        this.displayContents = output + this.BLANK.slice(output.length)
+    }
+
+    readDisplay(): string {
+        return this.displayContents;
+    }
+
+    isLocked(): boolean {
+        return true;
+    }
+}
+
+//Iteration 3 - Handle the key feature. Needed to provide input and resets 
+export class SafeImpl4 implements Safe {
+
+    private displayContents: string;
+    private keyInput: Button[];
+    private readonly BLANK: string = "      ";
+
+    constructor() {
+        this.displayContents = this.BLANK;
+        this.keyInput = [];
+    }
+
+    enter(button: Button): void {
+        if(button == Button.KEY) {
+            this.keyInput = [Button.KEY];
+            this.displayContents = this.BLANK;
         } else {
-            this.input.push(button)
-            if(this.input[0] != Button.KEY){
+            this.keyInput.push(button)
+            var output = this.keyInput.slice(1).join("")
+            this.displayContents = output + this.BLANK.slice(output.length)
+        }
+    }
+
+    readDisplay(): string {
+        return this.displayContents;
+    }
+
+    isLocked(): boolean {
+        return true;
+    }
+}
+
+//Iteration 4 - handle digit input without a key returns "ERROR " 
+export class SafeImpl5 implements Safe {
+
+    private displayContents: string;
+    private keyInput: Button[];
+    private readonly BLANK: string = "      ";
+
+    constructor() {
+        this.displayContents = this.BLANK;
+        this.keyInput = [];
+    }
+
+    enter(button: Button): void {
+        if(button == Button.KEY) {
+            this.keyInput = [Button.KEY];
+            this.displayContents = this.BLANK;
+        } else {
+            this.keyInput.push(button)
+            if(this.keyInput[0] != Button.KEY){
                 this.displayContents = "ERROR "
-                this.input = []
             } else {
-                var output = this.input.slice(1).join("")
-                output += this.BLANK.slice(output.length)
-                this.displayContents = output
+                var output = this.keyInput.slice(1).join("")
+                this.displayContents = output + this.BLANK.slice(output.length)
+            }   
+        }
+    }
 
+    readDisplay(): string {
+        return this.displayContents;
+    }
 
+    isLocked(): boolean {
+        return true;
+    }
+}
+
+//Iteration 5 - Handle opening the safe
+export class SafeImpl6 implements Safe {
+
+    private displayContents: string;
+    private keyInput: Button[];
+    private readonly BLANK: string = "      ";
+    private locked: boolean = true;
+    private code: string = "123456";
+
+    constructor() {
+        this.displayContents = this.BLANK;
+        this.keyInput = [];
+    }
+
+    enter(button: Button): void {
+        if(button == Button.KEY) {
+            this.keyInput = [Button.KEY];
+            this.displayContents = this.BLANK;
+        } else {
+            this.keyInput.push(button)
+            if(this.keyInput[0] != Button.KEY){
+                this.displayContents = "ERROR "
+            } else {
+                var output = this.keyInput.slice(1).join("")
+                this.displayContents = output + this.BLANK.slice(output.length)
+            }
+
+            if(this.displayContents == this.code){
+                this.locked = false;
+                this.displayContents = "OPEN  "
             }
         }
     }
 
     readDisplay(): string {
-        return this.displayContents
+        return this.displayContents;
     }
 
     isLocked(): boolean {
@@ -331,23 +208,119 @@ export class SafeImpl8 implements Safe{
 }
 
 
-export class SafeImpl9 implements Safe{
+//Iteration 6 - Handle "CLOSED" on wrong code
+export class SafeImpl7 implements Safe {
 
-    private displayContents:string;
-    private locked: boolean;
+    private displayContents: string;
     private keyInput: Button[];
-    private readonly BLANK:string = "      ";
-    private code:string = "123456";
+    private readonly BLANK: string = "      ";
+    private locked: boolean = true;
+    private code: string = "123456";
 
-    constructor(){
+    constructor() {
         this.displayContents = this.BLANK;
-        this.locked = true;
-        this.keyInput = []
+        this.keyInput = [];
     }
 
     enter(button: Button): void {
-        if(button == Button.LOCK){
-            this.displayContents = "      ";
+        if(button == Button.KEY) {
+            this.keyInput = [Button.KEY];
+            this.displayContents = this.BLANK;
+        } else {
+            this.keyInput.push(button)
+            if(this.keyInput[0] != Button.KEY){
+                this.displayContents = "ERROR ";
+            } else {
+                var inputString = this.keyInput.slice(1).join("");
+                inputString = inputString + this.BLANK.slice(inputString.length)
+                if(inputString == this.code){
+                    this.locked = false;
+                    this.displayContents = "OPEN  "
+                } else if(inputString.indexOf(" ") == -1){
+                    this.displayContents = "CLOSED"
+                } else {
+                    this.displayContents = inputString;
+                }
+            }
+        }
+    }
+
+    readDisplay(): string {
+        return this.displayContents;
+    }
+
+    isLocked(): boolean {
+        return this.locked;
+    }
+}
+
+//Iteration 7 - handle lock mechanism
+export class SafeImpl8 implements Safe {
+
+    private displayContents: string;
+    private keyInput: Button[];
+    private readonly BLANK: string = "      ";
+    private locked: boolean = true;
+    private code: string = "123456";
+
+    constructor() {
+        this.displayContents = this.BLANK;
+        this.keyInput = [];
+    }
+
+    enter(button: Button): void {
+        if (button == Button.LOCK) {
+            this.displayContents = "CLOSED";
+            this.locked = true;
+            this.keyInput = [];
+        } else if(button == Button.KEY) {
+            this.keyInput = [Button.KEY];
+            this.displayContents = this.BLANK;
+        } else {
+            this.keyInput.push(button)
+            if(this.keyInput[0] != Button.KEY){
+                this.displayContents = "ERROR ";
+            } else {
+                var inputString = this.keyInput.slice(1).join("");
+                inputString = inputString + this.BLANK.slice(inputString.length)
+                if(inputString == this.code){
+                    this.locked = false;
+                    this.displayContents = "OPEN  "
+                } else if(inputString.indexOf(" ") == -1){
+                    this.displayContents = "CLOSED"
+                } else {
+                    this.displayContents = inputString;
+                }
+            }
+        }
+    }
+
+    readDisplay(): string {
+        return this.displayContents;
+    }
+
+    isLocked(): boolean {
+        return this.locked;
+    }
+}
+
+//Iteration 8.1 - handle safe opened, then error input, then locked 
+export class SafeImpl9 implements Safe {
+
+    private displayContents: string;
+    private keyInput: Button[];
+    private readonly BLANK: string = "      ";
+    private locked: boolean = true;
+    private code: string = "123456";
+
+    constructor() {
+        this.displayContents = this.BLANK;
+        this.keyInput = [];
+    }
+
+    enter(button: Button): void {
+        if (button == Button.LOCK) {
+            this.displayContents = "CLOSED";
             this.locked = true;
             this.keyInput = [];
         } else if(button == Button.KEY) {
@@ -359,24 +332,24 @@ export class SafeImpl9 implements Safe{
                 this.locked = true;
                 this.keyInput = [];
             } else {
-                var inputResult = this.keyInput.slice(1).join("");
-                inputResult += this.BLANK.slice(inputResult.length);
-                if(inputResult == this.code){
-                    this.displayContents = "OPEN  ";
+                var inputString = this.keyInput.slice(1).join("");
+                inputString = inputString + this.BLANK.slice(inputString.length)
+                if(inputString == this.code){
                     this.locked = false;
-                    this.keyInput = [];
-                } else if(inputResult.indexOf(" ") == -1) {
-                    this.displayContents = "CLOSED";
+                    this.displayContents = "OPEN  "
+                    this.keyInput = []
+                } else if(inputString.indexOf(" ") == -1){
+                    this.displayContents = "CLOSED"
                     this.keyInput = [];
                 } else {
-                    this.displayContents = inputResult;
-                }   
+                    this.displayContents = inputString;
+                }
             }
         }
     }
 
     readDisplay(): string {
-        return this.displayContents
+        return this.displayContents;
     }
 
     isLocked(): boolean {
@@ -384,62 +357,177 @@ export class SafeImpl9 implements Safe{
     }
 }
 
+//Iteration 8.2 - handle additional unlock and lock cases
+export class SafeImpl10 implements Safe {
 
-export class SafeImpl implements Safe{
-
-    private displayContents:string;
-    private locked: boolean;
+    private displayContents: string;
     private keyInput: Button[];
-    private readonly BLANK:string = "      ";
-    private code:string = "123456";
+    private readonly BLANK: string = "      ";
+    private locked: boolean = true;
+    private code: string = "123456";
 
-    constructor(){
+    constructor() {
         this.displayContents = this.BLANK;
-        this.locked = true;
-        this.keyInput = []
+        this.keyInput = [];
     }
 
     enter(button: Button): void {
-        // what about a solution with input states
-        
+        if (button == Button.LOCK) {
+            this.displayContents = "CLOSED";
+            this.locked = true;
+            this.keyInput = [];
+        } else if(button == Button.KEY) {
+            this.keyInput = [Button.KEY];
+        } else {
+            this.keyInput.push(button)
+            if(this.keyInput[0] != Button.KEY){
+                this.displayContents = "ERROR ";
+                this.locked = true;
+                this.keyInput = [];
+            } else {
+                var inputString = this.keyInput.slice(1).join("");
+                inputString = inputString + this.BLANK.slice(inputString.length)
+                if(inputString == this.code){
+                    this.locked = false;
+                    this.displayContents = "OPEN  "
+                    this.keyInput = []
+                } else if(inputString.indexOf(" ") == -1){
+                    this.displayContents = this.BLANK;
+                    this.keyInput = [];
+                } else {
+                    this.displayContents = inputString;
+                }
+            }
+        }
+    }
 
-        if(button == Button.LOCK){
+    readDisplay(): string {
+        return this.displayContents;
+    }
+
+    isLocked(): boolean {
+        return this.locked;
+    }
+}
+
+//Done 
+export class SafeImpl implements Safe {
+
+    private displayContents: string;
+    private keyInput: Button[];
+    private readonly BLANK: string = "      ";
+    private locked: boolean = true;
+    private code: string = "123456";
+
+    constructor() {
+        this.displayContents = this.BLANK;
+        this.keyInput = [];
+    }
+
+    enter(button: Button): void {
+        if (button == Button.LOCK) {
+            this.displayContents = "CLOSED";
+            this.locked = true;
+            this.keyInput = [];
+        } else if(button == Button.KEY) {
+            this.keyInput = [Button.KEY];
+        } else {
+            this.keyInput.push(button)
+            if(this.keyInput[0] != Button.KEY){
+                this.displayContents = "ERROR ";
+                this.locked = true;
+                this.keyInput = [];
+            } else {
+                var inputString = this.keyInput.slice(1).join("");
+                inputString = inputString + this.BLANK.slice(inputString.length)
+                if(inputString == this.code){
+                    this.locked = false;
+                    this.displayContents = "OPEN  "
+                    this.keyInput = []
+                } else if(inputString.indexOf(" ") == -1){
+                    this.displayContents = this.BLANK;
+                    this.keyInput = [];
+                } else {
+                    this.displayContents = inputString;
+                }
+            }
+        }
+    }
+
+    readDisplay(): string {
+        return this.displayContents;
+    }
+
+    isLocked(): boolean {
+        return this.locked;
+    }
+}
+
+// Refactoring towards a state-oriented inpmplementation
+export class SafeImplRefactor implements Safe {
+
+    private displayContents: string;
+    private keyInput: Button[];
+    private readonly BLANK: string = "      ";
+    private locked: boolean = true;
+    private code: string = "123456";
+    private inputState: boolean;
+
+    constructor() {
+        this.displayContents = this.BLANK;
+        this.keyInput = [];
+        this.inputState = false;
+    }
+
+    enter(button: Button): void {
+        if (button == Button.LOCK) {
+            this.locked = true;
+            this.keyInput = [];
+            this.displayContents = "CLOSED";
+            this.inputState = false;
+            return;
+        }
+
+        if(button == Button.KEY){
             this.displayContents = this.BLANK;
             this.locked = true;
             this.keyInput = [];
-        } else if(button == Button.KEY) {
-            this.keyInput = [Button.KEY];
-            
-        } else {
+            this.inputState = true;
+            return;
+        }
+
+        if(this.inputState){
             this.keyInput.push(button)
-            if(this.keyInput[0] != Button.KEY){
-                this.displayContents = "ERROR ";
-                this.locked = true;
+            var inputString = this.keyInput.join("");
+            inputString = inputString + this.BLANK.slice(inputString.length)
+            if(inputString == this.code){
+                this.locked = false;
+                this.displayContents = "OPEN  "
+                this.keyInput = []
+                this.inputState = false;
+            } else if(inputString.indexOf(" ") == -1){
+                this.displayContents = this.BLANK;
                 this.keyInput = [];
+                this.inputState = false;
             } else {
-                var inputResult = this.keyInput.slice(1).join("");
-                inputResult += this.BLANK.slice(inputResult.length);
-                if(inputResult == this.code){
-                    this.displayContents = "OPEN  ";
-                    this.locked = false;
-                    this.keyInput = [];
-                } else if(inputResult.indexOf(" ") == -1) {
-                    this.displayContents = "CLOSED";
-                    this.keyInput = [];
-                } else {
-                    this.displayContents = inputResult;
-                }   
+                this.displayContents = inputString;
             }
+        } else {
+            this.displayContents = "ERROR ";
+            this.locked = true;
+            this.keyInput = [];
         }
     }
 
     readDisplay(): string {
-        return this.displayContents
+        return this.displayContents;
     }
 
     isLocked(): boolean {
         return this.locked;
     }
 }
+
+
 
 
