@@ -41,9 +41,7 @@ Additional notes: We are not told why a blank display means that it contains 6 s
 ### Given code 
 The original case study provide the reader with an Safe interface and an enum representing the button input. We follow the same, because it provide us with a useful starting point and interesting constraints.
 
-<details>
-  <summary>Safe interface</summary>
-  ```
+```
     // saft.ts
     interface Safe {
         // Enter a button press on the safe
@@ -60,18 +58,14 @@ The original case study provide the reader with an Safe interface and an enum re
         */
         isLocked():boolean;
     }
-  ```
-</details>
+```
 
-<details>
-  <summary>Button enum</summary>
-  ```
+```
     //safe.ts
     export enum Button {
         D0,D1,D2,D3,D4,D5,D6,D7,D8,D9,LOCK,KEY,PIN
     }
-  ```
-</details>
+```
 
 ## TDD analysis
 The first thing we want to do is to do an analysis of the user stories and provided code to establish some early test cases. We do not want to identify all test cases. We expect that the first few iterations of the implementation will give us more insight and help us identify new test cases. We also want a few obvious test cases to get us started. To do this we _review_ the user stories and write down a short list of test candidates to begin with. 
@@ -135,7 +129,7 @@ test('Initial state should be locked and returning a clean interface (6 spaces)'
 
 Without an actual implementation of the interface, we will get a '.../safe.ts' is not an module error. We fix this by implementing a skeleton of the code:
 <details>
-  <summary>Safe skeleton implementation</summary>
+  <summary>Hint: Safe skeleton implementation</summary>
 
   ```
     export class Safe implements ISafe{
@@ -155,7 +149,7 @@ Without an actual implementation of the interface, we will get a '.../safe.ts' i
 Next step is to implement our class so that it passes the tests by _Faking it_. Don't worry, while we fake it now, working through the test cases will help us get closer to the full implementation. Right now, we are in the `getting to know the use-case and implementation' phase. 
 
 <details>
-  <summary>Test case 1: Display reads 6 spaces and Safe is locked</summary>
+  <summary>Hint: Test case 1: Display reads 6 spaces and Safe is locked</summary>
 
   ```
     //safe.ts
@@ -177,7 +171,7 @@ Next step is to implement our class so that it passes the tests by _Faking it_. 
 The next test will focus our attention on the readDisplay() feature. Implement test case 2. Remember, that if we import the Button enum from `safe.ts` then we can initialise our Safe object and enter keys by calling `enter(button:Button);`. 
 
 <details>
-  <summary>Test case 2: Enter (KEY,1,2,3) gives "123   " as output. Safe is locked. </summary>
+  <summary>Hint: Test case 2: Enter (KEY,1,2,3) gives "123   " as output. Safe is locked. </summary>
 
   ```
     import {expect, test} from 'vitest'
@@ -199,7 +193,7 @@ The next test will focus our attention on the readDisplay() feature. Implement t
 Now we have two tests that needs to pass. And we need to do so with the smallest step possible. We need to create a relationship between our `enter(button:Button)` and `readDisplay():string` functions. Two hints: class properties and initial display state. 
 
 <details>
-  <summary>Getting test 1 and 2 to pass</summary>
+  <summary>Hint: Getting test 1 and 2 to pass</summary>
   
   ```
     //safe.ts
@@ -266,7 +260,7 @@ test<TestContext>('Display reads 6 spaces and Safe is locked', ({safe}) => {
 A common experience when writing tests alongside coding, is that you start becoming familiar with the feature and spot additional tests. The previous test: _Enter (key,1,2,3) gives "123   " as output. Safe is locked._ test if the code returns what we have provided as input. However, it does not test the _behaviour_ of the input. When we enter a key, the state of the Safe should change immediately. We need to test that each input is added to the previous inputs. How would you write a new test that checks each input before progressing?
 
 <details>
-  <summary>Test case 3: Enter (KEY,1) gives "1     ". Enter (7) gives "17    ". Enter (9) Gives "179   ". Safe is locked.</summary>
+  <summary>Hint: Test case 3: Enter (KEY,1) gives "1     ". Enter (7) gives "17    ". Enter (9) Gives "179   ". Safe is locked.</summary>
   
   ```
   test<TestContext>('Enter (KEY,1) gives "1     ". Enter (7) gives "17    ". Enter (9) Gives "179   ". Safe is locked.',  ({safe}) => {
@@ -308,7 +302,7 @@ This leads to at least 2 test cases:
 Lets begin with the first one:
 
 <details>
-  <summary>Enter (KEY, 1, KEY, 3) gives “3     ”. Safe locked.</summary>
+  <summary>Hint: Enter (KEY, 1, KEY, 3) gives “3     ”. Safe locked.</summary>
   
   ```
   test<TestContext>('Enter (KEY, 1, KEY, 3) gives “3     ”. Safe locked.', ({safe}) => {
@@ -327,7 +321,7 @@ _Why don't we go back and implement the KEY behaviour for the two previous tests
 Now we implement the second part of the KEY behaviour test. 
 
 <details>
-  <summary>Enter (1) gives “ERROR ”. Safe locked.</summary>
+  <summary>Hint: Enter (1) gives “ERROR ”. Safe locked.</summary>
   
   ```
   test<TestContext>('Enter (1) gives “ERROR ”. Safe locked.', ({safe}) => {
@@ -341,7 +335,7 @@ Now we implement the second part of the KEY behaviour test.
 The next step is to implement opening the safe. This will start adding some real logic to the Safe class. Start by implementing the test case.
 
 <details>
-  <summary>Enter (KEY,1,2,3,4,5,6) gives "OPEN "".</summary>
+  <summary>Hint: Enter (KEY,1,2,3,4,5,6) gives "OPEN "".</summary>
 
   ```
     test<TestContext>('Enter (key,1,2,3,4,5,6) gives "OPEN ".', ({safe}) => {
@@ -363,7 +357,7 @@ The next step is to implement opening the safe. This will start adding some real
 If the user enters the wrong code, then the display will be reset ("      ") and the safe will remain locked. Let us add a test for entering the wrong code:
 
 <details>
-  <summary>Enter (KEY,1,2,4,3,5,6) gives "CLOSED".</summary>
+  <summary>Hint: Enter (KEY,1,2,4,3,5,6) gives "CLOSED".</summary>
 
   ```
     test<TestContext>('Enter (KEY,1,2,4,3,5,6) gives "CLOSED".', ({safe}) => {
@@ -389,7 +383,7 @@ In this case we get everything from user story 2:
 Lets make a test that checks all those stages. 
 
 <details>
-  <summary>Unlock safe: Enter (KEY,1,2,3,4,5,6) gives "OPEN ". Safe unlocked. Enter (LOCK) gives "CLOSED". Safe locked.</summary>
+  <summary>Hint: Unlock safe: Enter (KEY,1,2,3,4,5,6) gives "OPEN ". Safe unlocked. Enter (LOCK) gives "CLOSED". Safe locked.</summary>
 
   ```
     test<TestContext>('Unlock safe: Enter (KEY,1,2,3,4,5,6) gives "OPEN ". Safe unlocked. Enter (LOCK) gives "CLOSED". Safe locked.', ({safe}) => {
