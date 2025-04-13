@@ -2,9 +2,7 @@ export enum Operator {
     ADDITION, SUBTRACTION, MULTIPLICATON, DIVISION
 } 
 
-
 export class Calculator {
-
     calculate(a:number, b:number, operator:Operator ): number {
         if(operator == Operator.ADDITION){
             return a + b;

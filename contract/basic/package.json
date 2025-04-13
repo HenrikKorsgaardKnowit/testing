@@ -1,0 +1,22 @@
+{
+  "name": "contract-testing",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run",
+    "prepare": "ts-patch install"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.30",
+    "ts-patch": "^3.3.0",
+    "typescript": "~5.8.3",
+    "vite": "latest",
+    "vitest": "latest"
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
+  }
+}
