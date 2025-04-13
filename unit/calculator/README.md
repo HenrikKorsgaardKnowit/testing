@@ -408,4 +408,4 @@ test('Test operations', () => {
 ## Summary
 This guide has show how to use unit tests with Vitest and how unit tests are for supporting refactoring. 
 
-For more on TDD and identifying tests as part of the TDD cyckle, see the extended case study of the Hotel Safe.
+For more on TDD and identifying tests as part of the TDD cycle, see the extended case study of the Hotel Safe.
