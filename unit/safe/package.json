@@ -6,7 +6,7 @@
     "test": "vitest"
   },
   "author": "Henrik Korsgaard",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "devDependencies": {
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"
