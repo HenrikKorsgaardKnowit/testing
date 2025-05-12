@@ -1,6 +1,6 @@
 
-## Introduction: Case study in Test-Driven Development
-This exercise goes through a case example from [Henrik Bærbaks book on "Flexible, Reliable Software"](https://www.baerbak.com/index.html). 
+## Case study in Test-Driven Development
+This case study goes through a case example from [Henrik Bærbaks book on "Flexible, Reliable Software"](https://www.baerbak.com/index.html). 
 
 In the [supplementary material](https://www.baerbak.com/safe.pdf), Henrik walks through the case of the Hotel Safe. The following use the same case and follow the test-cases and approach as close as possible. In the original case, the tests and implementation is done in Java. This guide use TypeScript and Vitest.
 
